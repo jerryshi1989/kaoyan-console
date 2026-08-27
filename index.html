@@ -120,7 +120,7 @@
   function renderSubjectNav(){
     const icons={eng:'英',math:'数',logic:'逻',write:'写'};
     $('#subjectNav').innerHTML=Object.keys(subjectNames).map(k=>`<div class="subject-group ${expandedSubjects.has(k)?'open':''}"><button class="subject-toggle" data-subject-toggle="${k}"><span><span class="subject-icon">${icons[k]}</span>${subjectNames[k]}</span><span class="chevron">›</span></button><div class="subject-links">${[['timeline','学习时间线'],['tasks','学习任务'],['workbook','习题册'],['mistakes','错题回顾'],['plan','复习路线']].map(([v,l])=>`<button class="subject-link ${activeSubject===k&&activeWorkspace===v?'active':''}" data-workspace="${v}" data-subject="${k}">${l}</button>`).join('')}</div></div>`).join('');
-    document.querySelectorAll('[data-subject-toggle]').forEach(b=>b.onclick=()=>{const subject=b.dataset.subjectToggle;if(expandedSubjects.has(subject)){expandedSubjects.delete(subject)}else{expandedSubjects.clear();expandedSubjects.add(subject);activeSubject=subject}renderSubjectNav()});
+    document.querySelectorAll('[data-subject-toggle]').forEach(b=>b.onclick=()=>{const subject=b.dataset.subjectToggle;if(expandedSubjects.has(subject)){expandedSubjects.delete(subject);renderSubjectNav()}else{expandedSubjects.clear();expandedSubjects.add(subject);activeSubject=subject;activeWorkspace='timeline';activateView('workspace');render()}});
     document.querySelectorAll('[data-workspace]').forEach(b=>b.onclick=()=>{activeSubject=b.dataset.subject;activeWorkspace=b.dataset.workspace;expandedSubjects.clear();expandedSubjects.add(activeSubject);activateView('workspace');render()});
   }
   function renderWorkspace(){
